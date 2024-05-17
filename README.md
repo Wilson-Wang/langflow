@@ -1,125 +1,118 @@
-<!-- markdownlint-disable MD030 -->
+# langflow 安装调试说明
 
-# [![Langflow](https://github.com/langflow-ai/langflow/blob/dev/docs/static/img/hero.png)](https://www.langflow.org)
+# 前置准备
 
-### [Langflow](https://www.langflow.org) is a new, visual way to build, iterate and deploy AI apps.
-
-# ⚡️ Documentation and Community
-
-- [Documentation](https://docs.langflow.org)
-- [Discord](https://discord.com/invite/EqksyE2EX9)
-
-# 📦 Installation
-
-You can install Langflow with pip:
+安装python3.10或3.11
 
 ```shell
-# Make sure you have Python 3.10 installed on your system.
-# Install the pre-release version
-python -m pip install langflow --pre --force-reinstall
+# 输入以下命令校验python是否安装成功
+python --version
 
-# or stable version
-python -m pip install langflow -U
+# 输入以下命令校验pip是否安装成功
+pip --version
 ```
 
-Then, run Langflow with:
+Pip镜像源更换
 
 ```shell
-python -m langflow run
+# 配置清华源
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# 配置备用阿里源   部分包清华源没有最新版
+pip config set extra-index-url https://mirrors.aliyun.com/pypi/simple
+# 配置trusted-host 两个站点都要配置
+pip config set install.trusted-host '\npypi.tuna.tsinghua.edu.cn\nmirrors.aliyun.com'
 ```
 
-You can also preview Langflow in [HuggingFace Spaces](https://huggingface.co/spaces/Langflow/Langflow-Preview). [Clone the space using this link](https://huggingface.co/spaces/Langflow/Langflow-Preview?duplicate=true), to create your own Langflow workspace in minutes.
-
-# 🎨 Creating Flows
-
-Creating flows with Langflow is easy. Simply drag components from the sidebar onto the canvas and connect them to start building your application.
-
-Explore by editing prompt parameters, grouping components into a single high-level component, and building your own Custom Components.
-
-Once you’re done, you can export your flow as a JSON file.
-
-Load the flow with:
-
-```python
-from langflow.load import run_flow_from_json
-
-results = run_flow_from_json("path/to/flow.json", input_value="Hello, World!")
-```
-
-# 🖥️ Command Line Interface (CLI)
-
-Langflow provides a command-line interface (CLI) for easy management and configuration.
-
-## Usage
-
-You can run the Langflow using the following command:
+安装poetry
 
 ```shell
-langflow run [OPTIONS]
+# 在命令行中输入以下命令：
+pip install poetry
 ```
 
-Each option is detailed below:
+安装make
 
-- `--help`: Displays all available options.
-- `--host`: Defines the host to bind the server to. Can be set using the `LANGFLOW_HOST` environment variable. The default is `127.0.0.1`.
-- `--workers`: Sets the number of worker processes. Can be set using the `LANGFLOW_WORKERS` environment variable. The default is `1`.
-- `--timeout`: Sets the worker timeout in seconds. The default is `60`.
-- `--port`: Sets the port to listen on. Can be set using the `LANGFLOW_PORT` environment variable. The default is `7860`.
-- `--config`: Defines the path to the configuration file. The default is `config.yaml`.
-- `--env-file`: Specifies the path to the .env file containing environment variables. The default is `.env`.
-- `--log-level`: Defines the logging level. Can be set using the `LANGFLOW_LOG_LEVEL` environment variable. The default is `critical`.
-- `--components-path`: Specifies the path to the directory containing custom components. Can be set using the `LANGFLOW_COMPONENTS_PATH` environment variable. The default is `langflow/components`.
-- `--log-file`: Specifies the path to the log file. Can be set using the `LANGFLOW_LOG_FILE` environment variable. The default is `logs/langflow.log`.
-- `--cache`: Selects the type of cache to use. Options are `InMemoryCache` and `SQLiteCache`. Can be set using the `LANGFLOW_LANGCHAIN_CACHE` environment variable. The default is `SQLiteCache`.
-- `--dev/--no-dev`: Toggles the development mode. The default is `no-dev`.
-- `--path`: Specifies the path to the frontend directory containing build files. This option is for development purposes only. Can be set using the `LANGFLOW_FRONTEND_PATH` environment variable.
-- `--open-browser/--no-open-browser`: Toggles the option to open the browser after starting the server. Can be set using the `LANGFLOW_OPEN_BROWSER` environment variable. The default is `open-browser`.
-- `--remove-api-keys/--no-remove-api-keys`: Toggles the option to remove API keys from the projects saved in the database. Can be set using the `LANGFLOW_REMOVE_API_KEYS` environment variable. The default is `no-remove-api-keys`.
-- `--install-completion [bash|zsh|fish|powershell|pwsh]`: Installs completion for the specified shell.
-- `--show-completion [bash|zsh|fish|powershell|pwsh]`: Shows completion for the specified shell, allowing you to copy it or customize the installation.
-- `--backend-only`: This parameter, with a default value of `False`, allows running only the backend server without the frontend. It can also be set using the `LANGFLOW_BACKEND_ONLY` environment variable.
-- `--store`: This parameter, with a default value of `True`, enables the store features, use `--no-store` to deactivate it. It can be configured using the `LANGFLOW_STORE` environment variable.
+```shell
+# 在命令行中输入以下命令安装：
+@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
 
-These parameters are important for users who need to customize the behavior of Langflow, especially in development or specialized deployment scenarios.
+# 再输入以下命令安装make
+choco install make
 
-### Environment Variables
+# 输入以下命令校验是否安装成功
+make --version
+```
 
-You can configure many of the CLI options using environment variables. These can be exported in your operating system or added to a `.env` file and loaded using the `--env-file` option.
+# 部署包安装运行说明
 
-A sample `.env` file named `.env.example` is included with the project. Copy this file to a new file named `.env` and replace the example values with your actual settings. If you're setting values in both your OS and the `.env` file, the `.env` settings will take precedence.
+- 创建langflow文件夹
+- 在文件夹下打开cmd，
+- 创建虚拟环境：python -m venv env
+- 激活虚拟环境：env\Scripts\activate
+- 安装langflow：pip install langflow
+- 启动langflow：python -m langflow run
+- 更新langflow：pip install --upgrade langflow
 
-# Deployment
+# 源码安装运行说明
 
-## Deploy Langflow on Google Cloud Platform
+项目初始化 （使用make）
 
-Follow our step-by-step guide to deploy Langflow on Google Cloud Platform (GCP) using Google Cloud Shell. The guide is available in the [**Langflow in Google Cloud Platform**](GCP_DEPLOYMENT.md) document.
+```shell
+# 在命令行中输入以下命令初始化：
+make init
+```
 
-Alternatively, click the **"Open in Cloud Shell"** button below to launch Google Cloud Shell, clone the Langflow repository, and start an **interactive tutorial** that will guide you through the process of setting up the necessary resources and deploying Langflow on your GCP project.
+项目初始化 （手动安装前后端）
 
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/langflow-ai/langflow&working_dir=scripts/gcp&shellonly=true&tutorial=walkthroughtutorial_spot.md)
+```shell
+# 在命令行中输入以下命令初始化后端：
+poetry install
 
-## Deploy on Railway
+# 在命令行中输入以下命令初始化前端：
+cd src/frontend
+npm install
+```
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/JMXEWp?referralCode=MnPSdg)
+项目运行
 
-## Deploy on Render
+```shell
+# 在命令行中输入以下命令启动整个项目：
+make start
 
-<a href="https://render.com/deploy?repo=https://github.com/langflow-ai/langflow/tree/main">
-<img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" />
-</a>
+# 在命令行中输入以下命令启动前端：
+make run_frontend
 
-# 👋 Contributing
+# 在命令行中输入以下命令启动后端：
+make backend
+```
 
-We welcome contributions from developers of all levels to our open-source project on GitHub. If you'd like to contribute, please check our [contributing guidelines](./CONTRIBUTING.md) and help make Langflow more accessible.
+前后端独立调试
 
----
+- 配置python虚拟环境
 
-[![Star History Chart](https://api.star-history.com/svg?repos=langflow-ai/langflow&type=Timeline)](https://star-history.com/#langflow-ai/langflow&Date)
+```shell
+# 虚拟环境会在poetry install命令执行时打印出来如下所示：
+Creating virtualenv langflow-Nncoset4-py3.10 in C:\Users\Wilson\AppData\Local\pypoetry\Cache\virtualenvs
 
-# 🌟 Contributors
+# 也可以在命令行中输入以下命令查看
+poetry env use python
+```
 
-[![langflow contributors](https://contrib.rocks/image?repo=langflow-ai/langflow)](https://github.com/langflow-ai/langflow/graphs/contributors)
+- 调试后端
 
-# 📄 License
+```shell
+\langflow\src\backend\base\langflow\__main__.py
+搜索 backend_only  修改为True
 
-Langflow is released under the MIT License. See the [LICENSE](LICENSE) file for details.
+添加运行形参run
+
+启动__main__.py
+```
+
+- 调试前端
+
+```shell
+#命令行中依次输入以下命令
+cd src/frontend
+npm start
+```

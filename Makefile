@@ -2,7 +2,7 @@
 
 all: help
 log_level ?= debug
-host ?= 0.0.0.0
+host ?= 127.0.0.1
 port ?= 7860
 env ?= .env
 open_browser ?= true

@@ -23,6 +23,10 @@ documentation = "https://docs.langflow.org"
 [tool.poetry.scripts]
 langflow = "langflow.__main__:main"
 
+[[tool.poetry.source]]
+name = "aliyun"
+url = "http://mirrors.aliyun.com/pypi/simple"
+priority = "primary"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
